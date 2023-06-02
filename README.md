@@ -2,6 +2,8 @@
 
 In this module we will compare the performance of JSON via an ASP.NET Controller vs [gRPC](https://grpc.io/).
 
+[Click here for my repo comparing SignalR, WebAPI, and gRPC.](https://github.com/carlfranklin/BlazorStreamingDemo)
+
 ### What is gRPC?
 
 [gRPC](https://grpc.io/) is a recursive acronym that stands for **g**RPC **R**emote **P**rocedure **C**alls. Event though it originated from Google in 2015, the g does not stand for Google, or so they say. gRPC is a standard that exists outside of .NET and even outside of Microsoft. It was developed as an efficient means of transporting messages between microservices. 
