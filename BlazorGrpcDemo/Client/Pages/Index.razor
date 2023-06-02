@@ -1,0 +1,77 @@
+﻿@page "/"
+@inject ApiService ApiService
+@inject People.PeopleClient PeopleClient
+
+<button @onclick="APIButtonClicked">Test API</button>
+<br />
+<p>@APIResult</p>
+<br />
+<br />
+
+<button @onclick="GRPCButtonClicked">Test gRPC</button>
+<br />
+<p>@GRPCResult</p>
+<br />
+<br />
+
+<button @onclick="GRPCGetRandomPersonButtonClicked">Get Random Person</button>
+<br />
+<p>@PersonResult</p>
+
+
+
+@code
+{
+    string APIResult = "";
+    string GRPCResult = "";
+    string PersonResult = "";
+    List<Person> People;
+
+    async Task APIButtonClicked()
+    {
+        APIResult = "Loading...";
+        await InvokeAsync(StateHasChanged);
+        var startTime = DateTime.Now;
+        People = await ApiService.GetAll();
+        if (People != null)
+        {
+            var elapsed = DateTime.Now.Subtract(startTime);
+            APIResult = $"{People.Count} records returned via API in {elapsed.TotalMilliseconds} ms.";
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    async Task GRPCButtonClicked()
+    {
+        GRPCResult = "Loading...";
+        await InvokeAsync(StateHasChanged);
+
+        var startTime = DateTime.Now;
+        var list = await PeopleClient.GetAllAsync(new GetAllPeopleRequest());
+
+        if (list != null)
+        {
+            People = list.People.ToList();
+            var elapsed = DateTime.Now.Subtract(startTime);
+            GRPCResult = $"{People.Count} records returned via gRPC in {elapsed.TotalMilliseconds} ms.";
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    async Task GRPCGetRandomPersonButtonClicked()
+    {
+        var obj = new object();
+        var rnd = new Random(obj.GetHashCode());
+        int RandomId = rnd.Next(1, 5000);
+        var request = new GetPersonByIdRequest { Id = RandomId };
+
+        var person = await PeopleClient.GetPersonByIdAsync(request);
+
+        if (person != null)
+        {
+            PersonResult = $"{person.Id} {person.FirstName} {person.LastName}";
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+}
