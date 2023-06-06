@@ -1,8 +1,8 @@
 # WebAPI vs gRPC
 
-In this module we will compare the performance of JSON via an ASP.NET Controller vs [gRPC](https://grpc.io/).
+In this module we will compare the performance of JSON via an ASP.NET Controller vs [gRPC](https://grpc.io/) by downloading 5000 model records with each technology.
 
-[Click here for my repo comparing SignalR, WebAPI, and gRPC.](https://github.com/carlfranklin/BlazorStreamingDemo)
+[Click here for my repo comparing streaming with SignalR, WebAPI, and gRPC.](https://github.com/carlfranklin/BlazorStreamingDemo)
 
 ### What is gRPC?
 
